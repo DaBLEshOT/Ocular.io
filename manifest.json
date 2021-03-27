@@ -5,7 +5,7 @@
     "manifest_version": 3,
     "permissions": [
         "webRequest",
-        "storage"
+        "unlimitedStorage"
     ],
     "host_permissions": [
         "http://*/*",
