@@ -21,7 +21,14 @@ class Listnener {
 
     saveTrackerRequest(request) {
         this.storage.save(request.timeStamp, request.initiator, request.url);
+
+        // TESTS
+        // Get todays trackers
         this.storage.get(new Date()).then((logs) => {
+            console.log(logs);
+        });
+        // Get tracker for certain time span
+        this.storage.getFromTo(new Date(2021, 2, 20), new Date(2021, 2, 27)).then((logs) => {
             console.log(logs);
         });
     }
@@ -127,13 +134,33 @@ class Storage {
             };
             request.onsuccess = (event) => {
                 let data = request.result;
-                resolve(data.logs);
+                resolve(data);
             };
         });
     }
 
     getFromTo(begin, end) {
+        return new Promise((resolve, reject) => {
+            let beginDate = this.removeTime(begin);
+            let endDate = this.removeTime(end);
+            
+            let store = this.getObjectStore(this.DB_STORE_NAME, "readwrite");
 
+            let logs = [];
+            store.openCursor().onsuccess = (event) => {
+                let cursor = event.target.result;
+                if (cursor) {
+                    let keyDate = this.removeTime(new Date(cursor.key));
+
+                    if (beginDate <= keyDate && keyDate <= endDate) {
+                        logs.push(cursor.value);
+                    }
+
+                    cursor.continue();
+                }
+                resolve(logs);
+            };
+        });
     }
 }
 
