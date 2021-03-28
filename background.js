@@ -1,13 +1,13 @@
 chrome.runtime.onInstalled.addListener(() => {
-    const listener = new Listnener();
-    listener.start();
+    const listener = new Listener();
 });
 
-class Listnener {
+class Listener {
     constructor(services) {
         const disconnectmeURL = "https://raw.githubusercontent.com/disconnectme/disconnect-tracking-protection/master/services.json";
         this.servicesUrl = services || disconnectmeURL;
         this.storage = new Storage();
+        this.storage.openDatabase().then(() => this.start());
     }
 
     start() {
@@ -74,24 +74,27 @@ class Storage {
 
     constructor() {
         this.db;
-        this.openDatabase();
     }
 
     openDatabase() {
-        //indexedDB.deleteDatabase(this.DB_NAME);
-        let request = indexedDB.open(this.DB_NAME, this.DB_VERSION);
-        request.onsuccess = (event) => {
-            this.db = event.target.result;
-        };
-        request.onerror = (event) => {
-            console.log(event);
-        };
+        return new Promise((resolve, reject) => {
+            //indexedDB.deleteDatabase(this.DB_NAME);
+            let request = indexedDB.open(this.DB_NAME, this.DB_VERSION);
+            request.onsuccess = (event) => {
+                this.db = event.target.result;
+                resolve();
+            };
+            request.onerror = (event) => {
+                console.log(event);
+                reject();
+            };
 
-        request.onupgradeneeded = (event) => {
-            let objectStore = event.target.result.createObjectStore(this.DB_STORE_NAME, { keyPath: "date" });
+            request.onupgradeneeded = (event) => {
+                let objectStore = event.target.result.createObjectStore(this.DB_STORE_NAME, { keyPath: "date" });
 
-            objectStore.createIndex("date", "date", { unique: true });
-        };
+                objectStore.createIndex("date", "date", { unique: true });
+            };
+        });
     }
 
     getObjectStore(store_name, mode) {
@@ -143,7 +146,7 @@ class Storage {
         return new Promise((resolve, reject) => {
             let beginDate = this.removeTime(begin);
             let endDate = this.removeTime(end);
-            
+
             let store = this.getObjectStore(this.DB_STORE_NAME, "readwrite");
 
             let logs = [];
