@@ -1,6 +1,6 @@
 {
-    "name": "Tracker Visualisation",
-    "description": "Visualise website tracker data",
+    "name": "Ocular.io",
+    "description": "An easy tracker visualisation plugin giving you insight where your vulnerabilities lie",
     "version": "1.0",
     "manifest_version": 3,
     "permissions": [
