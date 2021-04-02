@@ -28,7 +28,7 @@ class Listener {
             console.log(logs);
         });
         // Get tracker for certain time span
-        this.storage.getFromTo(new Date(2021, 2, 20), new Date(2021, 2, 27)).then((logs) => {
+        this.storage.getFromTo(new Date(2021, 2, 20), new Date(2021, 2, 30)).then((logs) => {
             console.log(logs);
         });
     }
@@ -136,7 +136,7 @@ class Storage {
                 console.log(event);
             };
             request.onsuccess = (event) => {
-                let data = request.result;
+                let data = event.target.result;
                 resolve(data);
             };
         });
@@ -160,8 +160,26 @@ class Storage {
                     }
 
                     cursor.continue();
+                } else {
+                    resolve(logs);
                 }
-                resolve(logs);
+            };
+        });
+    }
+
+    getAll() {
+        return new Promise((resolve, reject) => {
+            let store = this.getObjectStore(this.DB_STORE_NAME, "readwrite");
+
+            let logs = [];
+            store.openCursor().onsuccess = (event) => {
+                let cursor = event.target.result;
+                if (cursor) {
+                    logs.push(cursor.value);
+                    cursor.continue();
+                } else {
+                    resolve(logs);
+                }
             };
         });
     }
@@ -172,5 +190,120 @@ class Log {
         this.timestamp = timestamp;
         this.initiator = initiator;
         this.tracker = tracker;
+    }
+}
+
+class Utils {
+    constructor(database) {
+        this.database = database;
+    }
+    
+    async trackersCurrentDay() {
+        let data = await this.database.get(new Date());
+        if (data) {
+            return {
+                date: data.date,
+                chart: this._countDataset(data.logs)
+            };
+        }
+        return {};
+    }
+
+    async trackersPastWeek() {
+        let begin = new Date();
+        begin.setDate(begin.getDate() - 7);
+        let end = new Date();
+
+        let data = await this.database.getFromTo(begin, end);
+        if (data) {
+            let logs = [];
+            data.forEach((day) => {
+                logs = logs.concat(day.logs);
+            });
+            
+            return {
+                from: begin,
+                to: end,
+                chart: this._countDataset(logs)
+            };
+        }
+        return {};
+    }
+
+    async trackersPastMonth() {
+        let begin = new Date();
+        begin.setDate(begin.getDate() - 30);
+        let end = new Date();
+
+        let data = await this.database.getFromTo(begin, end);
+        if (data) {
+            let logs = [];
+            data.forEach((day) => {
+                logs = logs.concat(day.logs);
+            });
+            
+            return {
+                from: begin,
+                to: end,
+                chart: this._countDataset(logs)
+            };
+        }
+        return {};
+    }
+
+    async allTimePercentage() {
+        let data = await this.database.getAll();
+        if (data) {
+            let logs = [];
+            data.forEach((day) => {
+                logs = logs.concat(day.logs);
+            });
+            
+            return {
+                chart: this._countDataset(logs)
+            };
+        }
+        return {};
+    }
+
+    async report() {
+
+    }
+
+    _countDataset(logs) {
+        let set = {};
+        logs.forEach((log) => {
+            let hostname = new URL(log.tracker).hostname;
+            if (!(hostname in set)) {
+                set[hostname] = 0;
+            }
+            set[hostname]++;
+        });
+
+        let arr = Object.keys(set).map((key) => {
+            return { label: key, data: set[key] };
+        });
+
+        let sorted = arr.sort((obj1, obj2) => {
+            if (obj1.data > obj2.data) {
+                return -1;
+            }
+            if (obj1.data < obj2.data) {
+                return 1;
+            }
+            return 0;
+        });
+
+        let labels = sorted.map((obj) => {
+            return obj.label;
+        });
+        let data = sorted.map((obj) => {
+            return obj.data;
+        });
+
+        return {
+            labels: labels,
+            data: data
+        };
     }
 }
