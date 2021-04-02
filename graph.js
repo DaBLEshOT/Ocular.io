@@ -105,4 +105,100 @@ function trackersPerWeek() {
             }
         }
     })
+
+    var ctx = document.getElementById('domain');
+    var myChart = new Chart(ctx, {
+        type: 'pie',
+        data: {
+            labels: ['https://facebook.com', 'https://google.com', 'https://yahoo.com', 'https://amazon.de', 'https://google.si', 'https://amazon.de'],
+            datasets: [{
+                label: 'Trackers active on domain',
+                data: [6, 7, 3, 5, 2, 3],
+                backgroundColor: [
+                    'rgba(255, 99, 132, 1)',
+                    'rgba(54, 162, 235, 1)',
+                    'rgba(255, 206, 86, 1)',
+                    'rgba(75, 192, 192, 1)',
+                    'rgba(153, 102, 255, 1)',
+                    'rgba(255, 159, 64, 1)'
+                ],
+                borderColor: [
+                    'rgba(255, 99, 132, 1)',
+                    'rgba(54, 162, 235, 1)',
+                    'rgba(255, 206, 86, 1)',
+                    'rgba(75, 192, 192, 1)',
+                    'rgba(153, 102, 255, 1)',
+                    'rgba(255, 159, 64, 1)'
+                ],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            maintainAspectRatio: true,
+            legend: {
+                position: "bottom",
+                fontSize: 20
+            },
+            title: {
+                display: true,
+                text: '8 Most common trackers in the last month',
+                position: 'top',
+                fontSize: 30,
+                fontFamily: 'Inconsolata , Arial, sans-serif',
+                fontColor: "#333333",
+            }
+        }
+    });
+
+    var ctx = document.getElementById('frequent');
+    var myChart = new Chart(ctx, {
+        type: 'horizontalBar',
+        data: {
+            labels: ['https://facebook.com', 'https://google.com', 'https://yahoo.com', 'https://amazon.de', 'https://google.si', 'https://amazon.de'],
+            datasets: [{
+                label: 'Most frequent trackers',
+                data: [6, 7, 3, 5, 2, 3],
+                backgroundColor: [
+                    'rgba(255, 99, 132, 1)',
+                    'rgba(54, 162, 235, 1)',
+                    'rgba(255, 206, 86, 1)',
+                    'rgba(75, 192, 192, 1)',
+                    'rgba(153, 102, 255, 1)',
+                    'rgba(255, 159, 64, 1)'
+                ],
+                borderColor: [
+                    'rgba(255, 99, 132, 1)',
+                    'rgba(54, 162, 235, 1)',
+                    'rgba(255, 206, 86, 1)',
+                    'rgba(75, 192, 192, 1)',
+                    'rgba(153, 102, 255, 1)',
+                    'rgba(255, 159, 64, 1)'
+                ],
+                borderWidth: 1,
+                minBarLength: 6
+            }]
+        },
+        options: {
+            legend: {
+                display: false
+            },
+            maintainAspectRatio: false,
+
+            title: {
+                display: true,
+                text: 'Most frequent trackers',
+                position: 'top',
+                fontSize: 30,
+                fontFamily: 'Inconsolata , Arial, sans-serif',
+                fontColor: "#333333",
+            },
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        min: 2
+                    }
+                }]
+            }
+        }
+    })
 }
