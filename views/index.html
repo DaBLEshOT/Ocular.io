@@ -31,7 +31,7 @@
 			<div class="container">
 				<div class="row">
 					<div class="col-xs-2">
-						<div id="fh5co-logo"><a href="index.html">ocular<span>.</span>io</a></div>
+						<div id="fh5co-logo"><a href="index.html">Ocular<span>.</span>io</a></div>
 					</div>
 					<div class="col-xs-10 text-right menu-1">
 						<ul>
@@ -54,7 +54,7 @@
 						<div class="display-tc js-fullheight animate-box" data-animate-effect="fadeIn">
 							<h1> <b>Knowing</b> to prevent</h1>
 							<h2> An easy tracker visualisation plugin giving you insight where your vulnerabilities lie. </h2>
-							<p><a class="btn btn-primary btn-lg btn-demo" href="#"></i> Enable plugin</a> <a class="btn btn-primary btn-lg btn-learn" href="project.html"> Learn more</a></p>
+							<p><a class="btn btn-primary btn-lg btn-demo" href="#"></i> Enable plugin</a> <a class="btn btn-primary btn-lg btn-learn" href="#graphSeciton"> Learn more</a></p>
 						</div>
 					</div>
 				</div>
@@ -64,24 +64,23 @@
 
 
 	<div id="fh5co-features">
-		<div class="container">
-
+		<div class="container" >
 			<div class="services-padding">
-				<div class="text-center">
+				<div class="text-center" id="graphSection">
 					<h1><b>Who</b> has tracked you? </h1>
 				</div>
-				<!--<div class="col-lg-6"> -->
-				<div>
-  					<canvas id="week"></canvas>
-				</div>			
-				<br>
-				<!--<div class="col-lg-6"> -->
-				<div>
-  					<canvas id="month"></canvas>
-				</div>			
+				<div class="col-lg-6">
+					<div>
+  						<canvas id="week"></canvas>
+					</div> 
+				</div><br>
+				<div class="col-lg-6">
+					<div>
+  						<canvas id="allTime"></canvas>
+					</div>
+				</div>
 			</div>
 		</div>
-
 	</div>
 
 	<footer id="fh5co-footer" role="contentinfo">
@@ -138,7 +137,7 @@
 	<script src="/js/dist/Chart.js"></script>
 	<script src="/js/dist/Chart.bundle.min.js"></script>
 	<script src="/js/dist/Chart.min.js"></script>
-	<script src="/js/dist/Chart.bundle.js">
+	<script src="/js/dist/Chart.bundle.js"></script>
 
 	</body>
 </html>
