@@ -1,16 +1,16 @@
 Things to do:
 index.html
-    []-vstavi grafe
+    [X]-vstavi grafe
     []-animiraj prehod do grafov
     []-enable button-href do plugina
 
 project.html
-    []-spremeni iz slo na eng besedilo
+    [X]-spremeni iz slo na eng besedilo
     []-vstavi sliko plugina
 
 about.html
-    []-besedila o vsakem izmed nas
+    [X]-besedila o vsakem izmed nas: baje niso kul tk da očitno ne ;) 
 
-[]-favicon
-[]-readMe
-[]-test
+[X]-favicon
+[X]-readMe
+[X]-test
