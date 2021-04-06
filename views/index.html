@@ -54,7 +54,7 @@
 						<div class="display-tc js-fullheight animate-box" data-animate-effect="fadeIn">
 							<h1> <b>Knowing</b> to prevent</h1>
 							<h2> An easy tracker visualisation plugin giving you insight where your vulnerabilities lie. </h2>
-							<p><a class="btn btn-primary btn-lg btn-demo" href="#"></i> Enable plugin</a> <a class="btn btn-primary btn-lg btn-learn" href="#graphSeciton"> Learn more</a></p>
+							<p><a class="btn btn-primary btn-lg btn-demo" href="#"> Enable plugin</a> <a class="btn btn-primary btn-lg btn-learn" href="#graphSeciton"> Learn more</a></p>
 						</div>
 					</div>
 				</div>
@@ -65,19 +65,27 @@
 	<div id="fh5co-features">
 		<div class="container">
 			<div class="services-padding">
-				<div class="text-center" id="graphSection">
-					<h1><b>Who</b> has tracked you? </h1>
-				</div>
-				<div class="col-lg-6">
-					<div>
-  						<canvas id="week"></canvas>
-					</div> 
-				</div><br>
-				<div class="col-lg-6">
-					<div>
-  						<canvas id="allTime"></canvas>
+				<div class="row">
+					<div class="text-center" id="graphSection">
+						<h1><b>Who</b> has tracked you? </h1>
 					</div>
-				</div>		
+				</div>
+				<div class="row align-items-center">
+					<div class="col-sm-6">
+						<div>
+							<canvas id="week"></canvas>
+						</div>
+						<div class="text-center">
+							<a class="btn btn-primary btn-demo" id="scale">Switch to month</a>
+						</div>
+					</div>
+					<div class="col-sm-6">
+						<div>
+							<canvas id="allTime"></canvas>
+						</div>
+					</div>
+				</div>
+						
 			</div>
 		</div>
 	</div>
@@ -130,7 +138,6 @@
 	<script src="/js/jquery.waypoints.min.js"></script>
 	<script src="/js/jquery.flexslider-min.js"></script>
 	<script src="/js/Chart.min.js"></script>
-	<script src="/js/tinycolor-min.js"></script>
 	<script src="/background.js"></script>
 	<script src="/js/main.js"></script>
 	<script type="module" src="/js/graph.js"></script>
