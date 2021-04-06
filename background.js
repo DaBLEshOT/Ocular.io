@@ -197,7 +197,7 @@ class Utils {
     constructor(database) {
         this.database = database;
     }
-    
+
     async trackersCurrentDay() {
         let data = await this.database.get(new Date());
         if (data) {
@@ -220,7 +220,7 @@ class Utils {
             data.forEach((day) => {
                 logs = logs.concat(day.logs);
             });
-            
+
             return {
                 from: begin,
                 to: end,
@@ -241,7 +241,7 @@ class Utils {
             data.forEach((day) => {
                 logs = logs.concat(day.logs);
             });
-            
+
             return {
                 from: begin,
                 to: end,
@@ -258,7 +258,7 @@ class Utils {
             data.forEach((day) => {
                 logs = logs.concat(day.logs);
             });
-            
+
             return {
                 chart: this._countDataset(logs)
             };
@@ -266,8 +266,31 @@ class Utils {
         return {};
     }
 
-    async report() {
+    async dailyReport() {
+        let data = await this.database.get(new Date());
+        if (data) {
+            let trackerSet = {};
+            data.logs.forEach((log) => {
+                let tracker = new URL(log.tracker).hostname;
+                if (!(tracker in trackerSet)) {
+                    trackerSet[tracker] = [];
+                }
 
+                if (log.initiator) {
+                    let initiator = new URL(log.initiator).hostname;
+                    if (!trackerSet[tracker].includes(initiator)) {
+                        trackerSet[tracker].push(initiator);
+                    }
+                }
+            });
+
+            return {
+                date: data.date,
+                data: trackerSet,
+                chart: this._countDataset(data.logs)
+            };
+        }
+        return {};
     }
 
     _countDataset(logs) {
@@ -280,6 +303,22 @@ class Utils {
             set[hostname]++;
         });
 
+        let sorted = this._setToSortedArray(set);
+
+        let labels = sorted.map((obj) => {
+            return obj.label;
+        });
+        let data = sorted.map((obj) => {
+            return obj.data;
+        });
+
+        return {
+            labels: labels,
+            data: data
+        };
+    }
+
+    _setToSortedArray(set) {
         let arr = Object.keys(set).map((key) => {
             return { label: key, data: set[key] };
         });
@@ -294,16 +333,6 @@ class Utils {
             return 0;
         });
 
-        let labels = sorted.map((obj) => {
-            return obj.label;
-        });
-        let data = sorted.map((obj) => {
-            return obj.data;
-        });
-
-        return {
-            labels: labels,
-            data: data
-        };
+        return sorted;
     }
 }

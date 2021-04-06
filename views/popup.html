@@ -37,7 +37,7 @@
         </style>
     </head>
 
-    <body style="width: 300px; height: 500px; margin: 15px;">
+    <body style="width: 300px; height: 550px; margin: 15px;">
         <nav class="fh5co-nav">
             <div id="fh5co-logo" style="font-size: 24px !important;">
                 <a href="chrome-extension://ddipcalbnhmekehejmdggeagbliafceg/views/index.html" target="_blank"> Ocular<span>.</span>io</a>
@@ -51,11 +51,10 @@
                 <h2 class="graphTitle" style="margin-bottom: 5px;">Your top 6 trackers today</h2>
             </div>
             <div class="graph">
-                <!-- daily analysis graph-->
-                <canvas></canvas>
+                <canvas id="daily"></canvas>
             </div>
             <div class="dailyReport">
-                <!--domain names matching the tracker names-->
+                <ol id="sites"></ol>
             </div>
         </div>
         <div class="learnMore">
@@ -67,14 +66,9 @@
     <script src="/js/bootstrap.min.js"></script>
     <script src="/js/jquery.waypoints.min.js"></script>
     <script src="/js/jquery.flexslider-min.js"></script>
-    <script src="/js/popup.js"></script>
-
-    <script type="text/javascript" src="/graph.js"></script>
-
-	<script src="/js/dist/Chart.js"></script>
-	<script src="/js/dist/Chart.bundle.min.js"></script>
-	<script src="/js/dist/Chart.min.js"></script>
-	<script src="/js/dist/Chart.bundle.js"></script>
+    <script src="/js/Chart.min.js"></script>
+	<script src="/background.js"></script>
+    <script type="module" src="/js/popup.js"></script>
 
     </body>
 </html>
