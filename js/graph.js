@@ -1,3 +1,9 @@
+$("#graphSectionBtn").click(() => {
+    $([document.documentElement, document.body]).animate({
+        scrollTop: $("#graphSection").offset().top
+    }, 500);
+});
+
 function changeScale() {
     switch (scale) {
         case "month":
@@ -18,6 +24,7 @@ function changeScale() {
                 }]
             };
             barChart.options.plugins.title.text = '6 most common trackers in the last month';
+            scaleBtn.text("Switch to week");
             break;
         case "week":
             scale = "month";
@@ -38,6 +45,7 @@ function changeScale() {
                 }]
             };
             barChart.options.plugins.title.text = '6 most common trackers in the last week';
+            scaleBtn.text("Switch to month");
             break;
     }
     scaleBtn.toggleClass("btn-demo").toggleClass("btn-learn");
@@ -120,12 +128,12 @@ let percentData = {
     datasets: [{
         data: percent.chart.data.slice(0, limit),
         backgroundColor: [
-            'rgba(254,242,162,1)',
+            'rgba(254,225,35,1)',
             'rgba(254,239,137,1)',
-            'rgba(254,235,111,1)',
             'rgba(254,232,86,1)',
+            'rgba(254,242,162,1)',
             'rgba(254,229,61,1)',
-            'rgba(254,225,35,1)'
+            'rgba(254,235,111,1)'
         ],
         borderWidth: 0
     }]

@@ -54,7 +54,7 @@
 						<div class="display-tc js-fullheight animate-box" data-animate-effect="fadeIn">
 							<h1> <b>Knowing</b> to prevent</h1>
 							<h2> An easy tracker visualisation plugin giving you insight where your vulnerabilities lie. </h2>
-							<p><a class="btn btn-primary btn-lg btn-demo" href="#"> Enable plugin</a> <a class="btn btn-primary btn-lg btn-learn" href="#graphSeciton"> Learn more</a></p>
+							<p><a class="btn btn-primary btn-lg btn-demo" href="#"> Enable plugin</a> <a class="btn btn-primary btn-lg btn-learn" id="graphSectionBtn"> Learn more</a></p>
 						</div>
 					</div>
 				</div>
@@ -64,28 +64,25 @@
 
 	<div id="fh5co-features">
 		<div class="container">
-			<div class="services-padding">
-				<div class="row">
-					<div class="text-center" id="graphSection">
-						<h1><b>Who</b> has tracked you? </h1>
+			<div class="row">
+				<div class="col-sm text-center" id="graphSection" style="padding-top: 20px;">
+					<h1><b>Who</b> has tracked you? </h1>
+				</div>
+			</div>
+			<div class="row" style="display: flex;">
+				<div class="col-sm-6" style="margin: auto;">
+					<div>
+						<canvas id="week"></canvas>
+					</div>
+					<div class="text-center">
+						<a class="btn btn-primary btn-demo" id="scale" style="margin-top: 15px;">Switch to month</a>
 					</div>
 				</div>
-				<div class="row align-items-center">
-					<div class="col-sm-6">
-						<div>
-							<canvas id="week"></canvas>
-						</div>
-						<div class="text-center">
-							<a class="btn btn-primary btn-demo" id="scale">Switch to month</a>
-						</div>
-					</div>
-					<div class="col-sm-6">
-						<div>
-							<canvas id="allTime"></canvas>
-						</div>
+				<div class="col-sm-6" style="margin: auto;">
+					<div>
+						<canvas id="allTime"></canvas>
 					</div>
 				</div>
-						
 			</div>
 		</div>
 	</div>
