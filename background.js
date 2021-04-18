@@ -68,11 +68,10 @@ class Listener {
 
 class Storage {
 
-    DB_NAME = "Tracker-data";
-    DB_VERSION = 1;
-    DB_STORE_NAME = "Trackers";
-
     constructor() {
+        this.DB_NAME = "Tracker-data";
+        this.DB_VERSION = 1;
+        this.DB_STORE_NAME = "Trackers";
         this.db;
     }
 
