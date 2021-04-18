@@ -54,49 +54,14 @@ function changeScale() {
 
 let scaleBtn = $("#scale");
 scaleBtn.click(changeScale);
-
-const storage = new Storage();
-await storage.openDatabase();
-const utils = new Utils(storage);
 let scale = "month";
+
 const limit = 6;
 
-let week = await utils.trackersPastWeek();
-let weekData = {
-    labels: week.chart.labels.slice(0, limit),
-    datasets: [{
-        data: week.chart.data.slice(0, limit),
-        backgroundColor: [
-            'rgba(225,75,126,1)',
-            'rgba(213,36,96,1)',
-            'rgba(232,118,157,1)',
-            'rgba(221,53,110,1)',
-            'rgba(191,32,86,1)',
-            'rgba(228,97,141,1)'
-        ]
-    }]
-};
-
-let month = await utils.trackersPastMonth();
-let monthData = {
-    labels: month.chart.labels.slice(0, limit),
-    datasets: [{
-        data: month.chart.data.slice(0, limit),
-        backgroundColor: [
-            'rgba(254,235,111,1)',
-            'rgba(254,239,137,1)',
-            'rgba(254,232,86,1)',
-            'rgba(254,242,162,1)',
-            'rgba(254,225,35,1)',
-            'rgba(254,229,61,1)'
-        ]
-    }]
-};
-
-let ctx = $("#week");
-let barChart = new Chart(ctx, {
+let month;
+let week;
+let barChart = new Chart($("#week"), {
     type: 'bar',
-    data: weekData,
     options: {
         scales: {
             x: {
@@ -122,28 +87,8 @@ let barChart = new Chart(ctx, {
     }
 });
 
-let percent = await utils.allTimePercentage()
-let percentData = {
-    labels: percent.chart.labels.slice(0, limit),
-    datasets: [{
-        data: percent.chart.data.slice(0, limit),
-        backgroundColor: [
-            'rgba(254,225,35,1)',
-            'rgba(254,239,137,1)',
-            'rgba(254,232,86,1)',
-            'rgba(254,242,162,1)',
-            'rgba(254,229,61,1)',
-            'rgba(254,235,111,1)'
-        ],
-        borderWidth: 0
-    }]
-}
-
-
-let ctx2 = $("#allTime");
-let doughnutChart = new Chart(ctx2, {
+let doughnutChart = new Chart($("#allTime"), {
     type: "doughnut",
-    data: percentData,
     options: {
         cutout: "40%",
         radius: "75%",
@@ -153,4 +98,53 @@ let doughnutChart = new Chart(ctx2, {
             },
         }
     }
+});
+
+const storage = new Storage();
+storage.openDatabase().then(() => {
+    const utils = new Utils(storage);
+
+    utils.trackersPastWeek().then((data) => {
+        week = data;
+        barChart.data = {
+            labels: week.chart.labels.slice(0, limit),
+            datasets: [{
+                label: '6 Most common trackers in the last week',
+                data: week.chart.data.slice(0, limit),
+                backgroundColor: [
+                    'rgba(225,75,126,1)',
+                    'rgba(213,36,96,1)',
+                    'rgba(232,118,157,1)',
+                    'rgba(221,53,110,1)',
+                    'rgba(191,32,86,1)',
+                    'rgba(228,97,141,1)'
+                ]
+            }]
+        };
+        barChart.options.plugins.title.text = '6 most common trackers in the last week';
+        barChart.update();
+    });
+
+    utils.trackersPastMonth().then((data) => {
+        month = data;
+    });
+
+    utils.allTimePercentage().then((data) => {
+        doughnutChart.data = {
+            labels: data.chart.labels.slice(0, limit),
+            datasets: [{
+                data: data.chart.data.slice(0, limit),
+                backgroundColor: [
+                    'rgba(254,225,35,1)',
+                    'rgba(254,239,137,1)',
+                    'rgba(254,232,86,1)',
+                    'rgba(254,242,162,1)',
+                    'rgba(254,229,61,1)',
+                    'rgba(254,235,111,1)'
+                ],
+                borderWidth: 0
+            }]
+        };
+        doughnutChart.update();
+    });
 });

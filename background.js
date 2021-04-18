@@ -20,7 +20,7 @@ class Listener {
     }
 
     saveTrackerRequest(request) {
-        this.storage.save(request.timeStamp, request.initiator, request.url);
+        this.storage.save(request.timeStamp, request.initiator || request.originUrl, request.url);
 
         // TESTS
         // Get todays trackers
